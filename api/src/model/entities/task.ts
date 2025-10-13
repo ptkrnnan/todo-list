@@ -16,12 +16,13 @@ export class Task {
         this.description = description
         this.priority = priority
         this.status = status
-        this.validate(title, priority)
+        this.validate(title, priority, status)
     }
 
-    validate(title: string, priority: Priority) {
+    validate(title: string, priority: Priority, status: Status) {
         if (!title) throw new Error("Title cannot be empty")
         if (!priority) throw new Error("Priority cannot be empty")
+        if (!status) throw new Error("Status cannot be empty")
         if (title.length < 3 || title.length > 25) throw new Error("The title must be 3 and 25 characters long")
     }
 }
