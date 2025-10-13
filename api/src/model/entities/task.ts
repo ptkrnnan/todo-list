@@ -3,7 +3,7 @@ import { randomUUID, UUID } from "node:crypto";
 export type Priority = "high" | "medium" | "low"
 export type Status = "completed" | "progress" | "pending"
 
-class Task {
+export class Task {
     public readonly id: UUID
     public title: string
     public description?: string
