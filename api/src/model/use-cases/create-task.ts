@@ -5,7 +5,6 @@ interface CreateTaskUseCaseRequest {
     title: string
     description: string
     priority: Priority
-    status: Status
 }
 
 interface CreateTaskUseCaseResponse {
@@ -25,6 +24,7 @@ export class CreateTaskUseCase {
             title,
             description,
             priority,
+            status: 'pending',
         })
 
         return { task }
