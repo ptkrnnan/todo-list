@@ -24,4 +24,20 @@ describe('Create Task Use Case', () => {
         expect(task.priority).toBe('high');
         expect(task.status).toBe('pending');
     })
+
+    it('should not be able create a task with the same title', async () => {
+        await sut.execute({
+            title: 'New Task',
+            description: 'Task Description',
+            priority: 'high',
+        })
+
+        await expect(
+            sut.execute({
+                title: 'New Task',
+                description: 'Another Description',
+                priority: 'low',
+            })
+        ).rejects.toThrowError('Task with this title already exists.');
+    })
 })

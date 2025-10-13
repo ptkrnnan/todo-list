@@ -19,7 +19,9 @@ export class CreateTaskUseCase {
         description,
         priority,
     }: CreateTaskUseCaseRequest): Promise<CreateTaskUseCaseResponse> {
-
+        const existingTask = await this.tasksRepository.findByTitle(title)
+        if (existingTask) throw new Error('Task with this title already exists.')
+        
         const task = await this.tasksRepository.create({
             title,
             description,
