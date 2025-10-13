@@ -1,5 +1,5 @@
-import { Priority, Status, Task } from "../entities/task"
-import { TasksRepository } from "../repositories/tasks-repository"
+import type { Priority, Status, Task } from "../entities/task.js"
+import type { TasksRepository } from "../repositories/tasks-repository.js"
 
 interface CreateTaskUseCaseRequest {
     title: string
@@ -25,7 +25,6 @@ export class CreateTaskUseCase {
             title,
             description,
             priority,
-            status: "pending"
         })
 
         return { task }

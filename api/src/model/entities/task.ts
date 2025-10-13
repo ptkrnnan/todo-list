@@ -1,4 +1,4 @@
-import { randomUUID, UUID } from "node:crypto";
+import { randomUUID, type UUID } from "node:crypto";
 
 export type Priority = "high" | "medium" | "low"
 export type Status = "completed" | "progress" | "pending"
