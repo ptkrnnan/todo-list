@@ -25,4 +25,23 @@ export class Task {
         if (!status) throw new Error("Status cannot be empty")
         if (title.length < 3 || title.length > 25) throw new Error("The title must be 3 and 25 characters long")
     }
+
+    changeTitle(newTitle: string) {
+        if (!newTitle) throw new Error("Title cannot be empty")
+        this.title = newTitle
+    }
+
+    changeDescription(newDescription: string) {
+        this.description = newDescription
+    }
+
+    changePriority(newPriority: Priority) {
+        if (!newPriority) throw new Error("Priority cannot be empty")
+        this.priority = newPriority
+    }
+
+    changeStatus(newStatus: Status) {
+        if (!newStatus) throw new Error("Status cannot be empty")
+        this.status = newStatus
+    }
 }
