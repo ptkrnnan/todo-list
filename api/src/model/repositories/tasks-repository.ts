@@ -7,4 +7,5 @@ export interface TasksRepository {
     delete(id: UUID): Promise<void>
     findByTitle(title: string): Promise<Task | null>
     findById(id: UUID): Promise<Task | null>
+    findAll(): Promise<Task[]>
 }

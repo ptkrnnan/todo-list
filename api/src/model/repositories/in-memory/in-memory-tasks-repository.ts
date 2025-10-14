@@ -1,5 +1,5 @@
 import type { UUID } from "crypto";
-import { Task } from "../../entities/task.js";
+import { Task, type Priority, type Status } from "../../entities/task.js";
 import type { TasksRepository } from "../tasks-repository.js";
 
 export class InMemoryTasksRepository implements TasksRepository {
@@ -36,5 +36,9 @@ export class InMemoryTasksRepository implements TasksRepository {
     async findById(id: UUID): Promise<Task | null> {
         const task = this.items.find(item => item.id === id)
         return task ?? null
+    }
+
+    async findAll(): Promise<Task[]> {
+        return this.items
     }
 }
