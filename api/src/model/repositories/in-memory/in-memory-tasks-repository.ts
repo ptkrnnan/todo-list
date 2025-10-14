@@ -23,6 +23,11 @@ export class InMemoryTasksRepository implements TasksRepository {
         return task
     }
 
+    async delete(id: UUID): Promise<void> {
+        const taskIndex = this.items.findIndex(item => item.id === id)
+        this.items.splice(taskIndex, 1)
+    }
+
     async findByTitle(title: string): Promise<Task | null> {
         const task = this.items.find(item => item.title === title)
         return task ?? null
