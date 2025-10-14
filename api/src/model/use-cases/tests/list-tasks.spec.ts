@@ -57,4 +57,32 @@ describe('List Tasks Use Case', () => {
         expect(tasks.forEach(task => expect(task.priority).toBe('low')))
         expect(tasks.forEach(task => expect(task.status).toBe('pending')))
     })
+
+    it('should return an empty array if no tasks match filters', async () => {
+        await createTask.execute({
+            title: 'Task 1',
+            description: 'Description 1',
+            priority: 'low',
+        })
+
+        const { tasks } = await sut.execute({ priority: 'high', status: 'completed' })
+        expect(tasks).toEqual([])
+    })
+
+    it('should return all tasks if no filters are provided', async () => {
+        await createTask.execute({
+            title: 'Task 1',
+            description: 'Description 1',
+            priority: 'low',
+        })
+
+        await createTask.execute({
+            title: 'Task 2',
+            description: 'Description 2',
+            priority: 'high',
+        })
+
+        const { tasks } = await sut.execute({})
+        expect(tasks.length).toEqual(2)
+    })
 })
