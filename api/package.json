@@ -8,7 +8,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx --watch src/server.ts",
-    "test": "vitest --watch src/model/use-cases/tests"
+    "test": "vitest --watch src/model/use-cases/tests",
+    "test:e2e": "vitest --watch src/controllers/tasks/tests"
   },
   "devDependencies": {
     "@types/node": "^24.7.2",
@@ -17,6 +18,9 @@
     "vitest": "^3.2.4"
   },
   "dependencies": {
-    "fastify": "^5.6.1"
+    "@types/supertest": "^6.0.3",
+    "fastify": "^5.6.1",
+    "supertest": "^7.1.4",
+    "zod": "^4.1.12"
   }
 }
