@@ -1,4 +1,7 @@
 import { randomUUID, type UUID } from "node:crypto";
+import { TitleCannotBeEmptyError } from "./errors/title-cannot-empty.js";
+import { PriorityCannotBeEmptyError } from "./errors/priority-cannot-empty.js";
+import { StatusCannotBeEmptyError } from "./errors/status-cannot-empty.js";
 
 export type Priority = "high" | "medium" | "low"
 export type Status = "completed" | "progress" | "pending"
@@ -20,14 +23,14 @@ export class Task {
     }
 
     validate(title: string, priority: Priority, status: Status) {
-        if (!title) throw new Error("Title cannot be empty")
-        if (!priority) throw new Error("Priority cannot be empty")
-        if (!status) throw new Error("Status cannot be empty")
+        if (!title) throw new TitleCannotBeEmptyError()
+        if (!priority) throw new PriorityCannotBeEmptyError()
+        if (!status) throw new StatusCannotBeEmptyError()
         if (title.length < 3 || title.length > 25) throw new Error("The title must be 3 and 25 characters long")
     }
 
     changeTitle(newTitle: string) {
-        if (!newTitle) throw new Error("Title cannot be empty")
+        if (!newTitle) throw new TitleCannotBeEmptyError()
         this.title = newTitle
     }
 
@@ -36,12 +39,12 @@ export class Task {
     }
 
     changePriority(newPriority: Priority) {
-        if (!newPriority) throw new Error("Priority cannot be empty")
+        if (!newPriority) throw new PriorityCannotBeEmptyError()
         this.priority = newPriority
     }
 
     changeStatus(newStatus: Status) {
-        if (!newStatus) throw new Error("Status cannot be empty")
+        if (!newStatus) throw new StatusCannotBeEmptyError()
         this.status = newStatus
     }
 }

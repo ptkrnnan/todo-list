@@ -1,5 +1,6 @@
 import type { Priority, Status, Task } from "../entities/task.js"
 import type { TasksRepository } from "../repositories/tasks-repository.js"
+import { TitleAlreadyExistsError } from "./errors/title-already-exists.js"
 
 interface CreateTaskUseCaseRequest {
     title: string
@@ -20,7 +21,7 @@ export class CreateTaskUseCase {
         priority,
     }: CreateTaskUseCaseRequest): Promise<CreateTaskUseCaseResponse> {
         const existingTask = await this.tasksRepository.findByTitle(title)
-        if (existingTask) throw new Error('Task with this title already exists.')
+        if (existingTask) throw new TitleAlreadyExistsError()
         
         const task = await this.tasksRepository.create({
             title,

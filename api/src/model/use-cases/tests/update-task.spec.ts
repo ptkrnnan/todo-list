@@ -2,6 +2,8 @@ import { beforeEach, describe, it, expect } from "vitest";
 import { InMemoryTasksRepository } from "../../repositories/in-memory/in-memory-tasks-repository.js";
 import { CreateTaskUseCase } from "../create-task.js";
 import { UpdateTaskCaseUse } from "../update-task.js";
+import { TitleAlreadyExistsError } from "../errors/title-already-exists.js";
+import { CannotUpdateCompletedTaskError } from "../errors/cannot-update-completed-task.js";
 
 let taskRepository: InMemoryTasksRepository;
 let createTask: CreateTaskUseCase;
@@ -57,7 +59,7 @@ describe('Update Task Use Case', () => {
                 priority: 'low',
                 status: 'progress',
             })
-        ).rejects.toThrowError("Task with this title already exists")
+        ).rejects.toThrowError(TitleAlreadyExistsError)
     })
 
     it('should not be able to update a task with the status completed', async () => {
@@ -83,6 +85,6 @@ describe('Update Task Use Case', () => {
                 priority: 'low',
                 status: 'completed',
             })
-        ).rejects.toThrowError("Completed tasks cannot be updated")
+        ).rejects.toThrowError(CannotUpdateCompletedTaskError)
     })
 })

@@ -1,6 +1,9 @@
 import type { UUID } from "node:crypto"
 import type { Priority, Status, Task } from "../entities/task.js"
 import type { TasksRepository } from "../repositories/tasks-repository.js"
+import { CannotUpdateCompletedTaskError } from "./errors/cannot-update-completed-task.js"
+import { TitleAlreadyExistsError } from "./errors/title-already-exists.js"
+import { TaskNotFoundError } from "./errors/task-not-found.js"
 
 interface UpdateTaskCaseUseRequest {
     id: UUID
@@ -26,12 +29,12 @@ export class UpdateTaskCaseUse {
     }: UpdateTaskCaseUseRequest): Promise<UpdateTaskCaseUseResponse> {
         
         const existingTask = await this.taskRepository.findById(id)
-        if (!existingTask) throw new Error('Task not found')
+        if (!existingTask) throw new TaskNotFoundError()
 
         const taskWithSameTitle = await this.taskRepository.findByTitle(title)
-        if (taskWithSameTitle && taskWithSameTitle.id !== id) throw new Error('Task with this title already exists')
+        if (taskWithSameTitle && taskWithSameTitle.id !== id) throw new TitleAlreadyExistsError()
 
-        if (existingTask.status === 'completed') throw new Error('Completed tasks cannot be updated')
+        if (existingTask.status === 'completed') throw new CannotUpdateCompletedTaskError()
 
         existingTask.changeTitle(title)
         existingTask.changeDescription(description)
