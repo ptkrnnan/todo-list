@@ -2,6 +2,7 @@ import z from "zod";
 import type { HttpController } from "../http-controller.js";
 import type { HttpRequest, HttpResponse } from "../types-controller.js";
 import { makeCreateUseCase } from "../factories/make-create-use-case.js";
+import { TitleAlreadyExistsError } from "../../model/use-cases/errors/title-already-exists.js";
 
 export class CreateTaskController implements HttpController {
     async handle(request: HttpRequest, response: HttpResponse): Promise<void> {
@@ -22,7 +23,7 @@ export class CreateTaskController implements HttpController {
             })
             return response.status(201).send(task)
         } catch (err) {
-            if (err instanceof Error) {
+            if (err instanceof TitleAlreadyExistsError) {
                 return response.status(409).send({ message: err.message })
             }
         }
