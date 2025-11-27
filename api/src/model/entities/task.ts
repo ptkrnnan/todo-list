@@ -6,6 +6,13 @@ import { StatusCannotBeEmptyError } from "./errors/status-cannot-empty.js";
 export type Priority = "high" | "medium" | "low"
 export type Status = "completed" | "progress" | "pending"
 
+type TaskProps = {
+    title: string,
+    description?: string,
+    priority: Priority,
+    status: Status
+}
+
 export class Task {
     public readonly id: UUID
     public title: string
@@ -13,7 +20,7 @@ export class Task {
     public priority: Priority
     public status: Status
 
-    constructor(title: string, priority: Priority, status: Status, description?: string) {
+    constructor({ title, description, priority, status }: TaskProps) {
         this.id = randomUUID()
         this.title = title
         this.description = description

@@ -1,5 +1,5 @@
 import type { UUID } from "crypto";
-import { Task, type Priority, type Status } from "../../entities/task.js";
+import { Task } from "../../entities/task.js";
 import type { TasksRepository } from "../tasks-repository.js";
 import { TaskNotFoundError } from "../../use-cases/errors/task-not-found.js";
 
@@ -7,7 +7,12 @@ export class InMemoryTasksRepository implements TasksRepository {
     public items: Task[] = []
 
     async create(data: any): Promise<Task> {
-        const task = new Task(data.title, data.description, data.priority, data.status)
+        const task = new Task({
+            title: data.title,
+            description: data.description,
+            priority: data.priority,
+            status: data.status,
+        })
         this.items.push(task)
         return task
     }
