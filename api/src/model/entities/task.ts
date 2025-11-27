@@ -9,11 +9,11 @@ export type Status = "completed" | "progress" | "pending"
 export class Task {
     public readonly id: UUID
     public title: string
-    public description?: string
+    public description: string | undefined
     public priority: Priority
     public status: Status
 
-    constructor(title: string, description: string, priority: Priority, status: Status) {
+    constructor(title: string, priority: Priority, status: Status, description?: string) {
         this.id = randomUUID()
         this.title = title
         this.description = description
