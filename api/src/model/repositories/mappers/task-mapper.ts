@@ -3,7 +3,7 @@ import { Task } from "../../entities/task.js";
 type PrismaTask = {
     id: string;
     title: string;
-    description: string | "";
+    description: string | undefined;
     priority: "low" | "medium" | "high";
     status: "pending" | "progress" | "completed";
 }
@@ -20,13 +20,12 @@ export class TaskMapper {
     }
 
     static toDomain(data: PrismaTask): Task {
-        const description = data.description === "" ? undefined : data.description;
-        const task = new Task(
-            data.title,
-            data.priority,
-            data.status,
-            description,
-        );
+        const task = new Task({
+            title: data.title,
+            description: data.description ?? "" ? undefined : data.description,
+            priority: data.priority,
+            status: data.status
+        });
 
         (task as any).id = data.id;
 

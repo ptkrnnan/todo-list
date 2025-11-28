@@ -9,7 +9,7 @@ export class InMemoryTasksRepository implements TasksRepository {
     async create(data: any): Promise<Task> {
         const task = new Task({
             title: data.title,
-            description: data.description,
+            description: data.description ?? undefined,
             priority: data.priority,
             status: data.status,
         })

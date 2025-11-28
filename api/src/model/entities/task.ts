@@ -8,7 +8,7 @@ export type Status = "completed" | "progress" | "pending"
 
 type TaskProps = {
     title: string,
-    description?: string,
+    description: string | undefined,
     priority: Priority,
     status: Status
 }
@@ -41,7 +41,7 @@ export class Task {
         this.title = newTitle
     }
 
-    changeDescription(newDescription: string) {
+    changeDescription(newDescription?: string) {
         this.description = newDescription
     }
 
