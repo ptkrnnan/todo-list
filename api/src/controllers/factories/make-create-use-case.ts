@@ -1,7 +1,7 @@
-import { InMemoryTasksRepository } from "../../model/repositories/in-memory/in-memory-tasks-repository.js";
+import { PrismaTasksRepository } from "../../model/repositories/prisma/prisma-tasks-repository.js";
 import { CreateTaskUseCase } from "../../model/use-cases/create-task.js";
 
 export function makeCreateUseCase() {
-    const taskRepository = new InMemoryTasksRepository()
+    const taskRepository = new PrismaTasksRepository()
     return new CreateTaskUseCase(taskRepository)
 }
