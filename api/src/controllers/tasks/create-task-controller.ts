@@ -2,11 +2,12 @@ import z from "zod";
 import type { HttpController } from "../http-controller.js";
 import type { HttpRequest, HttpResponse } from "../types-controller.js";
 import { makeCreateUseCase } from "../factories/make-create-use-case.js";
-import { TitleAlreadyExistsError } from "../../model/use-cases/errors/title-already-exists.js";
 
 export class CreateTaskController implements HttpController {
     async handle(request: HttpRequest, response: HttpResponse): Promise<void> {
 
+        // Validando o corpo da requisição
+        // zod lançara uma exceção se a validação falhar
         const bodySchema = z.object({
            title: z.string().min(3).max(25),
            description: z.string().min(5).max(100),
@@ -14,19 +15,17 @@ export class CreateTaskController implements HttpController {
         })
         const { title, description, priority } = bodySchema.parse(request.body)
 
-        try {
-            const createUseCase = makeCreateUseCase()
-            const task = await createUseCase.execute({
-                title,
-                description,
-                priority
-            })
-            return response.status(201).send(task)
-        } catch (err) {
-            if (err instanceof TitleAlreadyExistsError) {
-                return response.status(409).send({ message: err.message })
-            }
-        }
-        return response.status(500).send({ message: 'Internal Server Error' })
+        // Executando o caso de uso
+        // realiza a criação da tarefa
+        const createUseCase = makeCreateUseCase()
+        const task = await createUseCase.execute({
+            title,
+            description,
+            priority
+        })
+
+        // retornando a resposta com a tarefa criada
+        // status 201 Created
+        return response.status(201).send(task)
     }
 }

@@ -30,4 +30,9 @@ describe('Delete Task Controller', () => {
         const deleteResponse = await request(app.server).delete('/tasks/00000000-0000-0000-0000-000000000000')
         expect(deleteResponse.statusCode).toEqual(404)
     })
+
+    it('should not be able to delete a task with invalid id', async () => {
+        const deleteResponse = await request(app.server).delete('/tasks/invalid-id')
+        expect(deleteResponse.statusCode).toEqual(400)
+    })
 })

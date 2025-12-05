@@ -1,5 +1,7 @@
 import type { FastifyInstance } from "fastify";
 import { fastifyAdapter } from "./adapters/fastify-adapter.js";
+
+// Importando controladores
 import { CreateTaskController } from "./tasks/create-task-controller.js";
 import { DeleteTaskController } from "./tasks/delete-task.js";
 
