@@ -30,6 +30,9 @@ export function fastifyAdapter(controller: HttpController) {
             // Chamando o controlador HTTP com a requisição e resposta adaptadas
             await controller.handle(httpRequest, httpResponse)
         }
+        // Isolamento de Cross-Cutting Concerns
+        // Mantém os controllers 100% focados na lógica de negócio
+        // Centralizando o tratamento de erros no adapter. abordagem mais limpa, escalável e testável
         catch (err) {
 
             // Lidando com erro de título já existente
