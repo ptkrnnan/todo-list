@@ -5,10 +5,10 @@ import type { HttpRequest, HttpResponse } from "../types-controller.js";
 export function fastifyAdapter(controller: HttpController) {
     return async (request: FastifyRequest, reply: FastifyReply) => {
         const httpRequest: HttpRequest ={
-            body: request.body,
-            params: request.params,
-            query: request.query,
-            headers: request.headers,
+            body: request.body ?? {},
+            params: request.params ?? {},
+            query: request.query ?? {},
+            headers: request.headers ?? {},
         }
 
         const httpResponse: HttpResponse = {
@@ -16,7 +16,7 @@ export function fastifyAdapter(controller: HttpController) {
                 reply.status(code)
                 return this
             },
-            send(body: any) {
+            send(body?: any) {
                 reply.send(body)
             }
         }

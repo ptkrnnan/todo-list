@@ -1,8 +1,8 @@
-import type { UUID } from "crypto";
 import type { Task } from "../../entities/task.js";
 import type { TasksRepository } from "../tasks-repository.js";
 import { TaskMapper } from "../mappers/task-mapper.js";
 import { prisma } from "../../../lib/prisma.js";
+import type { UUID } from "node:crypto";
 
 export class PrismaTasksRepository implements TasksRepository {
     async create(data: Task): Promise<Task> {
@@ -18,16 +18,15 @@ export class PrismaTasksRepository implements TasksRepository {
         return TaskMapper.toDomain(createdTask)
     }
 
-    async update(id: UUID, data: Task): Promise<Task> {
+    async update(id: string, data: Task): Promise<Task> {
         // const task = TaskMapper.toPrisma(data)
         // const updatedTask = await prisma.task.update({ where: { id }, data: task })
         // return TaskMapper.toDomain(updatedTask)
         throw new Error("Method not implemented.");
     }
 
-    async delete(id: UUID): Promise<void> {
-        // await prisma.task.delete({ where: { id } })
-        throw new Error("Method not implemented.");
+    async delete(id: string): Promise<void> {
+        await prisma.task.delete({ where: { id } })
     }
 
     async findByTitle(title: string): Promise<Task | null> {
@@ -36,11 +35,10 @@ export class PrismaTasksRepository implements TasksRepository {
         return TaskMapper.toDomain(task)
     }
 
-    async findById(id: UUID): Promise<Task | null> {
-        // const task = await prisma.task.findUnique({ where: { id } })
-        // if (!task) return null
-        // return TaskMapper.toDomain(task)
-        throw new Error("Method not implemented.");
+    async findById(id: string): Promise<Task | null> {
+        const task = await prisma.task.findUnique({ where: { id } })
+        if (!task) return null
+        return TaskMapper.toDomain(task)
     }
 
     async findAll(): Promise<Task[]> {

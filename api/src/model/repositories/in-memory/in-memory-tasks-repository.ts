@@ -1,4 +1,3 @@
-import type { UUID } from "crypto";
 import { Task } from "../../entities/task.js";
 import type { TasksRepository } from "../tasks-repository.js";
 import { TaskNotFoundError } from "../../use-cases/errors/task-not-found.js";
@@ -17,7 +16,7 @@ export class InMemoryTasksRepository implements TasksRepository {
         return task
     }
 
-    async update(id: UUID, data: any): Promise<Task> {
+    async update(id: string, data: any): Promise<Task> {
         const task = await this.findById(id)
         if (!task) throw new TaskNotFoundError()
         
@@ -29,7 +28,7 @@ export class InMemoryTasksRepository implements TasksRepository {
         return task
     }
 
-    async delete(id: UUID): Promise<void> {
+    async delete(id: string): Promise<void> {
         const taskIndex = this.items.findIndex(item => item.id === id)
         this.items.splice(taskIndex, 1)
     }
@@ -39,7 +38,7 @@ export class InMemoryTasksRepository implements TasksRepository {
         return task ?? null
     }
 
-    async findById(id: UUID): Promise<Task | null> {
+    async findById(id: string): Promise<Task | null> {
         const task = this.items.find(item => item.id === id)
         return task ?? null
     }

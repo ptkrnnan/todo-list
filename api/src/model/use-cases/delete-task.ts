@@ -1,9 +1,8 @@
-import type { UUID } from "node:crypto"
 import type { TasksRepository } from "../repositories/tasks-repository.js"
 import { TaskNotFoundError } from "./errors/task-not-found.js"
 
 interface DeleteTaskUseCaseRequest {
-    id: UUID
+    id: string
 }
 
 export class DeleteTaskUseCase {

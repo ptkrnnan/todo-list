@@ -14,7 +14,7 @@ describe('Create Task Controller', () => {
     })
 
     it('should be able to create a task', async () => {
-        const response = await request(app.server).post('/task').send({
+        const response = await request(app.server).post('/tasks').send({
             title: 'New Task',
             description: 'Task description',
             priority: 'low'
@@ -24,13 +24,13 @@ describe('Create Task Controller', () => {
     })
 
     it('should not be able to create a task with same title', async () => {
-        await request(app.server).post('/task').send({
+        await request(app.server).post('/tasks').send({
             title: 'New Task',
             description: 'Task description',
             priority: 'low'
         })
 
-        const sameTitle = await request(app.server).post('/task').send({
+        const sameTitle = await request(app.server).post('/tasks').send({
             title: 'New Task',
             description: 'Task description',
             priority: 'low'
